@@ -11,10 +11,10 @@
 html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif}
 body{background:radial-gradient(ellipse at 50% 35%,#168243,#0b5a2c)}
 #hud{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-around;padding:calc(env(safe-area-inset-top) + 4px) 6px 4px;color:#fff;background:rgba(0,0,0,.3);text-align:center}
-#hud small{display:block;font-size:13px;opacity:.9;white-space:nowrap}
-#hud b{display:block;font-size:23px;line-height:1.1;font-variant-numeric:tabular-nums}
-#bb{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;gap:8px;padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);background:rgba(0,0,0,.3)}
-#bb button{flex:1;height:48px;font-family:inherit;font-size:20px;font-weight:700;color:#fff;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.65);border-radius:12px}
+#hud small{display:block;font-size:14px;opacity:.9;white-space:nowrap}
+#hud b{display:block;font-size:25px;line-height:1.1;font-variant-numeric:tabular-nums}
+#bb{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;gap:6px;padding:8px 6px calc(env(safe-area-inset-bottom) + 8px);background:rgba(0,0,0,.3)}
+#bb button{flex:1;height:48px;font-family:inherit;font-size:18px;font-weight:700;padding:0;color:#fff;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.65);border-radius:12px}
 #bb button:active{background:rgba(255,255,255,.45)}
 #board{position:fixed;inset:0;--cw:50px}
 .slot{position:absolute;left:0;top:0;width:var(--cw);height:calc(var(--cw)*1.45);border-radius:calc(var(--cw)*.1);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:calc(var(--cw)*.6);font-weight:700}
@@ -31,21 +31,34 @@ body{background:radial-gradient(ellipse at 50% 35%,#168243,#0b5a2c)}
 .ct{position:absolute;left:0;right:0;top:calc(var(--cw)*.5);bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:calc(var(--cw)*.85);line-height:1}
 .ct b{font-size:calc(var(--cw)*.7)}
 .ct i{font-style:normal;font-size:calc(var(--cw)*.4)}
+#pn{position:fixed;inset:0;z-index:300;display:none;flex-direction:column;background:#0d3d20;color:#fff}
+#ph{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 8px) 14px 8px;background:rgba(0,0,0,.35)}
+#ph b{font-size:24px}
+#px{font-family:inherit;font-size:20px;font-weight:700;color:#fff;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.65);border-radius:12px;height:46px;padding:0 18px}
+#pb{flex:1;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch;padding:10px 14px calc(env(safe-area-inset-bottom) + 24px);font-size:18px;line-height:1.5}
+#pb h3{margin:18px 0 4px;font-size:21px;color:#ffd75e}
+#pb p{margin:8px 0}
+.rw{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.2)}
+.rw b{white-space:nowrap}.pl{color:#7dff9b}.mi{color:#ff9a9a}
+.tg{font-family:inherit;font-size:20px;font-weight:700;color:#fff;width:100%;height:50px;border-radius:12px;border:2px solid rgba(255,255,255,.65);background:rgba(255,255,255,.15)}
+.tg.on{background:#2e9e4f}
 #cv{position:fixed;inset:0;z-index:100;pointer-events:none;display:none}
 #win{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:flex-end;flex-direction:column;gap:14px;padding-bottom:20%;color:#fff;text-align:center;font-size:24px;font-weight:700;pointer-events:none}
 #wm{white-space:pre-line;text-shadow:0 2px 6px #000}
 #again{pointer-events:auto;font:inherit;color:#fff;background:#c0392b;border:0;border-radius:12px;padding:12px 26px}
 </style></head><body>
-<div id="hud"><div><small id="sl">分數</small><b id="sc">0</b></div><div><small>時間</small><b id="tm">0:00</b></div><div><small>步數</small><b id="mvn">0</b></div><div><small>最高</small><b id="bs">0</b></div></div>
-<div id="board"></div><canvas id="cv"></canvas><div id="bb"><button id="bn">新遊戲</button><button id="bu">復原</button><button id="bd">抽3張</button></div>
+<div id="hud"><div><small id="sl">分數</small><b id="sc">0</b></div><div><small>時間</small><b id="tm">0:00</b></div><div><small>步數</small><b id="mvn">0</b></div></div>
+<div id="board"></div><canvas id="cv"></canvas><div id="bb"><button id="bn">新遊戲</button><button id="bu">復原</button><button id="bd">抽3張</button><button id="br">規則</button><button id="bt">分數</button></div>
+<div id="pn"><div id="ph"><b id="pt"></b><button id="px">關閉</button></div><div id="pb"></div></div>
 <div id="win"><div id="wm"></div><button id="again">再玩一局</button></div>
 <script>
 const LS={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
 const num=k=>+LS.get(k)||0;
+const hist=()=>{try{return JSON.parse(LS.get('hist'))||[]}catch(e){return[]}};
 const SU=['♠','♥','♦','♣'].map(s=>s+'\uFE0E'),RK=['','A','2','3','4','5','6','7','8','9','10','J','Q','K'];
 const red=s=>s===1||s===2,$=i=>document.getElementById(i);
 const board=$('board'),hud=$('hud'),cv=$('cv'),winEl=$('win');
-let G,undo=[],W,H,g,cw,ch,y0,ty,bb=0,ox=0,busy=false,drag=null,lastTap={id:-1,t:0},animOn=false;
+let paused=false,G,undo=[],W,H,g,cw,ch,y0,ty,bb=0,ox=0,busy=false,drag=null,lastTap={id:-1,t:0},animOn=false;
 const els={},slots=[],cx=i=>ox+i*(cw+g);
 const fmt=t=>Math.floor(t/60)+':'+String(t%60).padStart(2,'0');
 function slot(x,y,txt,id){const e=document.createElement('div');e.className='slot';if(id)e.id=id;e.textContent=txt||'';board.appendChild(e);slots.push({e,x,y});}
@@ -65,12 +78,12 @@ function render(){
  G.f.forEach((a,j)=>a.forEach((c,k)=>put(c,cx(3+j),y0,k+1)));
  G.t.forEach((a,i)=>a.forEach((c,k)=>put(c,cx(i),tabY(i,k),k+1)));
  hudUpdate();}
-function hudUpdate(){const w=num('wins');$('sl').textContent=w?`累積·第${w+1}局`:'分數';$('sc').textContent=G.base+G.score;$('tm').textContent=fmt(G.time);$('mvn').textContent=G.moves;$('bs').textContent=num('best');$('bd').textContent='抽'+G.draw+'張';}
+function hudUpdate(){const w=num('wins');$('sl').textContent=w?`累積·第${w+1}局`:'分數';$('sc').textContent=G.base+G.score;$('tm').textContent=fmt(G.time);$('mvn').textContent=G.moves;$('bd').textContent='抽'+G.draw+'張';}
 const save=()=>LS.set('sol',JSON.stringify(G));
 function newGame(){if(G&&G.started&&!G.won){LS.set('run',0);LS.set('wins',0);}animOn=false;cv.style.display='none';winEl.style.display='none';busy=false;undo=[];
  const d=[];for(let s=0;s<4;s++)for(let r=1;r<=13;r++)d.push({id:s*13+r-1,s,r,up:false});
  for(let i=51;i>0;i--){const j=Math.random()*(i+1)|0;[d[i],d[j]]=[d[j],d[i]];}
- G={s:[],w:[],f:[[],[],[],[]],t:[[],[],[],[],[],[],[]],score:0,moves:0,time:0,started:false,won:false,draw:+LS.get('sd')||3,base:num('run'),pass:1};
+ G={s:[],w:[],f:[[],[],[],[]],t:[[],[],[],[],[],[],[]],score:0,moves:0,time:0,started:false,won:false,draw:+LS.get('sd')||3,base:num('run'),pass:1,tm:tp()};
  for(let i=0;i<7;i++)for(let k=0;k<=i;k++){const c=d.pop();c.up=k===i;G.t[i].push(c);}
  G.s=d;render();save();}
 function find(id){
@@ -98,9 +111,9 @@ function autoFinish(){busy=true;(function step(){if(G.won){busy=false;return;}
  for(let i=0;i<7;i++){const a=G.t[i];if(a.length){const c=a[a.length-1];for(let j=0;j<4;j++)if(canF(c,j)){mv({p:'t',n:i,arr:a,i:a.length-1},'f',j);setTimeout(step,90);return;}}}
  busy=false;})();}
 function checkWin(){if(G.f.reduce((a,x)=>a+x.length,0)<52)return;
- G.won=true;busy=false;if(G.time>=30)G.score+=Math.round(700000/G.time);
- const tot=G.base+G.score,rec=tot>num('best');LS.set('run',tot);LS.set('wins',num('wins')+1);if(rec)LS.set('best',tot);LS.set('sol','');hudUpdate();
- $('wm').textContent=`🎉 恭喜過關！\n本局 ${G.score} 分　${fmt(G.time)}\n累積 ${tot} 分${rec?' 🏆新紀錄':''}\n歷史最高 ${num('best')}`;winEl.style.display='flex';celebrate();}
+ G.won=true;busy=false;let bn=0;if(G.tm&&G.time>=30){bn=Math.round(700000/G.time);G.score+=bn;}
+ const tot=G.base+G.score,rec=tot>num('best');LS.set('run',tot);{const h=hist().filter(x=>x.t>Date.now()-62*864e5);h.push({t:Date.now(),s:tot});LS.set('hist',JSON.stringify(h));}LS.set('wins',num('wins')+1);if(rec)LS.set('best',tot);LS.set('sol','');hudUpdate();
+ $('wm').textContent=`🎉 恭喜過關！\n本局 ${G.score} 分${bn?`（含時間獎勵 ${bn}）`:''}　${fmt(G.time)}\n累積 ${tot} 分${rec?' 🏆新紀錄':''}\n歷史最高 ${num('best')}`;winEl.style.display='flex';celebrate();}
 function face(x,px,py,c){x.fillStyle='#fff';x.strokeStyle='#222';x.beginPath();x.roundRect(px,py,cw,ch,cw*.1);x.fill();x.stroke();
  x.fillStyle=red(c.s)?'#d00000':'#000';x.textBaseline='top';x.textAlign='left';x.font=`800 ${cw*.5}px sans-serif`;const r=RK[c.r];x.fillText(r,px+cw*.05,py+ch*.01);
  const w=x.measureText(r).width;x.font=`800 ${cw*.34}px sans-serif`;x.fillText(SU[c.s],px+cw*.05+w,py+cw*.12);
@@ -140,11 +153,31 @@ $('bn').onclick=()=>ask(newGame);
 $('again').onclick=newGame;
 $('bd').onclick=()=>ask(()=>{LS.set('sd',G.draw===3?1:3);newGame();});
 $('bu').onclick=()=>{if(busy||G.won||!undo.length)return;const t=G.time;G=JSON.parse(undo.pop());G.time=t;render();save();};
+const row=(a,b,c)=>`<div class="rw"><span>${a}</span><b class="${c||''}">${b}</b></div>`;
+function openP(t,h){$('pt').textContent=t;$('pb').innerHTML=h;$('pb').scrollTop=0;$('pn').style.display='flex';paused=true;}
+$('px').onclick=()=>{$('pn').style.display='none';paused=false;};
+const tp=()=>LS.get('tp')==='1';
+function diagram(){const w=38,h=55,x=i=>19+i*44,R=['5','K','8','3','J','6','2'];
+ const card=(i,y,t,c)=>`<rect x="${x(i)}" y="${y}" width="${w}" height="${h}" rx="5" fill="#fff" stroke="#222"/><text x="${x(i)+4}" y="${y+19}" font-size="17" font-weight="800" fill="${c}">${t}</text>`;
+ const back=(i,y)=>`<rect x="${x(i)}" y="${y}" width="${w}" height="${h}" rx="5" fill="#2d66cc" stroke="#222"/>`;
+ const slot=(i,y)=>`<rect x="${x(i)}" y="${y}" width="${w}" height="${h}" rx="5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-dasharray="4 3"/><text x="${x(i)+19}" y="${y+36}" font-size="22" font-weight="700" fill="#fff" fill-opacity=".6" text-anchor="middle">A</text>`;
+ const lab=(c,y,t)=>`<text x="${c}" y="${y}" font-size="15" font-weight="800" fill="#ffd75e" text-anchor="middle">${t}</text>`;
+ let o='<svg viewBox="0 0 340 282" width="100%" style="display:block;margin:8px 0;background:#157a3d;border-radius:12px">'+lab(x(0)+19,24,'發牌堆')+lab(x(1)+19,24,'棄牌堆')+lab((x(3)+x(6)+w)/2,24,'回收區')+back(0,34)+card(1,34,'7♥','#d00000')+card(3,34,'A♠','#000')+slot(4,34)+slot(5,34)+slot(6,34);
+ for(let i=0;i<7;i++){for(let k=0;k<i;k++)o+=back(i,122+k*9);o+=card(i,122+i*9,R[i]+(i%2?'♣':'♦'),i%2?'#000':'#d00000');}
+ return o+'<path d="M19 236v7h302v-7" fill="none" stroke="#ffd75e" stroke-width="2"/>'+lab(170,266,'桌面列（共 7 欄）')+'</svg>';}
+function rules(){return '<p>本遊戲採用 Windows 經典接龍的「標準計分」。</p>'+diagram()+'<p><b>發牌堆</b>：點一下翻牌。<b>棄牌堆</b>：翻出來的牌，只能用最上面一張。<b>回收區</b>：依花色從 A 往 K 往上疊。<b>桌面列</b>：紅黑交錯，從 K 往 A 往下接。</p><h3>計時模式（可隨時開關）</h3><button id="tpb" class="tg"></button><p>開啟後：遊戲中每 10 秒扣 2 分（分數最低 0），過關可得時間獎勵。關閉就兩者都沒有。這是 Windows 計時遊戲的規則，預設關閉。</p><p>時間獎勵要從這局開始到過關都開著才算；中途關掉，這局就拿不到獎勵，之後再打開也不會恢復。</p><h3>得分</h3>'+row('棄牌堆 → 桌面列','+5','pl')+row('棄牌堆 → 回收區','+10','pl')+row('桌面列 → 回收區','+10','pl')+row('翻開桌面列蓋著的牌','+5','pl')
++'<h3>扣分</h3>'+row('回收區 → 桌面列','−15','mi')+row('抽1張：第2輪起，每重翻一輪','−100','mi')+row('抽3張：第4輪起，每重翻一輪','−20','mi')+row('計時扣分（開啟時）每 10 秒','−2','mi')+'<p>分數最低是 0，不會變成負數。</p>'
++'<h3>時間獎勵（計時模式）</h3><p>整局都開著計時模式、過關且用時超過 30 秒，加上「700000 ÷ 秒數」。</p>'+row('2 分鐘過關','+5833','pl')+row('5 分鐘過關','+2333','pl')+row('10 分鐘過關','+1167','pl')+''
++'<h3>高分小技巧</h3><p>1. <b>速度最重要</b>：開著計時模式，約 10 分鐘內過關，時間獎勵就比一局的基本分數還多。</p><p>2. 能放回收區就放回收區：棄牌堆直接上去 +10，先放桌面列只有 +5。</p><p>3. 盡快翻開蓋著的牌：21 張蓋牌，每張 +5，共 105 分。</p><p>4. 少把回收區的牌拿回桌面，每次 −15。</p><p>5. 少重翻棄牌堆：抽1張每重翻一輪就 −100，先把能動的牌動完。</p><p>6. 抽3張比較難過關，但重翻的扣分輕，第4輪才開始扣。</p><p>7. 過關的基本分：52 張進回收區 520 分，加翻開 21 張的 105 分，至少 625 分。</p>'
++'<h3>本遊戲的連勝累積</h3><p>過關後按「新遊戲」，分數會接著累加；中途放棄這局，累積歸零。</p>';}
+$('br').onclick=()=>{openP('計分規則',rules());const b=$('tpb'),u=()=>{b.textContent='計時模式：'+(tp()?'開':'關');b.classList.toggle('on',tp());};u();b.onclick=()=>{LS.set('tp',tp()?'0':'1');if(G&&!G.won){if(!G.started)G.tm=tp();else if(!tp())G.tm=false;}save();u();};};
+$('bt').onclick=()=>{const d=new Date(),n=new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime(),h=hist(),b=t=>h.reduce((m,x)=>x.t>=t?Math.max(m,x.s):m,0),f=v=>v||'—',w=num('wins');
+ openP('分數紀錄',row('目前累積'+(w?`（連勝 ${w} 局）`:''),f(num('run')))+'<h3>最高累積分數</h3>'+row('歷史最高',f(num('best')),'pl')+row('本日最高',f(b(n)))+row('本週最高（週一起算）',f(b(n-((d.getDay()+6)%7)*864e5)))+row('本月最高',f(b(new Date(d.getFullYear(),d.getMonth(),1).getTime())))+'<p>以過關時的累積分數計算，放棄的局不算。「歷史最高」包含更新前的紀錄，本月、本週、本日只統計更新後的過關紀錄。</p>');};
 ['gesturestart','gesturechange','contextmenu','dblclick'].forEach(t=>document.addEventListener(t,e=>e.preventDefault()));
 document.addEventListener('pointerdown',()=>{try{navigator.wakeLock.request('screen').catch(()=>{})}catch(e){}},{once:true});
 addEventListener('resize',()=>{layout();if(G)render();});addEventListener('orientationchange',()=>setTimeout(()=>{layout();render();},200));
-setInterval(()=>{if(G&&G.started&&!G.won){G.time++;hudUpdate();if(G.time%5===0)save();}},1000);
+setInterval(()=>{if(G&&G.started&&!G.won&&!paused){G.time++;if(G.time%10===0&&tp())G.score=Math.max(0,G.score-2);hudUpdate();if(G.time%5===0)save();}},1000);
 try{const s=JSON.parse(LS.get('sol'));if(s&&s.t&&s.t.length===7&&!s.won)G=s;}catch(e){}
-if(G){if(G.base==null)G.base=num('run');G.pass=G.pass||1;}layout();G?render():newGame();
+if(G){if(G.base==null)G.base=num('run');if(G.tm==null)G.tm=tp();G.pass=G.pass||1;}layout();G?render():newGame();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script></body></html>
